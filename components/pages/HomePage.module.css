@@ -471,6 +471,45 @@
   text-underline-offset: 0.25rem;
 }
 
+.footerHoverTrigger {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: default;
+}
+
+.footerHoverPreview {
+  pointer-events: none;
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + 1.2rem);
+  z-index: 5;
+  width: clamp(180px, 20vw, 280px);
+  opacity: 0;
+  transform: translate3d(0, 12px, 0) scale(0.96);
+  transform-origin: right bottom;
+  transition:
+    opacity 180ms ease,
+    transform 220ms ease;
+}
+
+.footerHoverTrigger:hover .footerHoverPreview,
+.footerHoverTrigger:focus-visible .footerHoverPreview,
+.footerHoverTrigger:focus-within .footerHoverPreview {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+}
+
+.footerHoverImage {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.28),
+    0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
 .footerMarquee {
   pointer-events: none;
   position: absolute;

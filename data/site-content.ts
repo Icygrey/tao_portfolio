@@ -112,7 +112,7 @@ export const siteContent: Record<Locale, LocaleContent> = {
 			brand: "Brand",
 		},
 		home: {
-			eyebrow: "INDEPENDENT FULL STACK ENGINEER",
+			eyebrow: "IAM NOT JUST A FULLSTACK ENGINEER",
 			emailLabel: "THUANG0209@OUTLOOK.COM",
 			marquee: "TAO HUANG",
 			badge: "@",
