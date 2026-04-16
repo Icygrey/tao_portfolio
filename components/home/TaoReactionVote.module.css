@@ -1,204 +1,232 @@
 .root {
-  justify-self: start;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  will-change: transform, opacity;
+	justify-self: start;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+	will-change: transform, opacity;
 }
 
 .label {
-  margin: 0;
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: 0.56rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(17, 17, 17, 0.48);
+	margin: 0;
+	text-align: center;
+	font-family: var(--font-mono);
+	font-size: 0.56rem;
+	letter-spacing: 0.2em;
+	text-transform: uppercase;
+	color: rgba(17, 17, 17, 0.48);
 }
 
 .subLabel {
-  margin: -0.35rem 0 0;
+  margin: -0.58rem 0 0;
   text-align: center;
   font-family: var(--font-mono);
   font-size: 0.48rem;
-  letter-spacing: 0.14em;
-  text-transform: none;
-  color: rgba(17, 17, 17, 0.36);
+	letter-spacing: 0.14em;
+	text-transform: none;
+	color: rgba(17, 17, 17, 0.36);
+	transition: color 180ms ease;
+}
+
+.subLabelPulse {
+	animation: subLabelBreath 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .row {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1.1rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1.1rem;
 }
 
 .button {
-  position: relative;
-  display: inline-flex;
-  width: 3.15rem;
-  height: 3.15rem;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid rgba(17, 17, 17, 0.12);
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.5);
-  color: rgba(17, 17, 17, 0.9);
-  cursor: pointer;
-  transition:
-    transform 180ms ease,
-    border-color 180ms ease,
-    background-color 180ms ease,
-    box-shadow 180ms ease;
+	position: relative;
+	display: inline-flex;
+	width: 3.15rem;
+	height: 3.15rem;
+	align-items: center;
+	justify-content: center;
+	border: 1px solid rgba(17, 17, 17, 0.12);
+	border-radius: 999px;
+	background: rgba(255, 255, 255, 0.5);
+	color: rgba(17, 17, 17, 0.9);
+	cursor: pointer;
+	transition:
+		transform 180ms ease,
+		border-color 180ms ease,
+		background-color 180ms ease,
+		box-shadow 180ms ease;
 }
 
 .button:hover,
 .button:focus-visible {
-  transform: translateY(-1px);
-  box-shadow: 0 12px 20px rgba(17, 17, 17, 0.08);
+	transform: translateY(-1px);
+	box-shadow: 0 12px 20px rgba(17, 17, 17, 0.08);
 }
 
 .button:focus-visible {
-  outline: none;
+	outline: none;
 }
 
 .buttonDisabled {
-  cursor: not-allowed;
-  opacity: 0.5;
-  box-shadow: none;
+	cursor: not-allowed;
+	opacity: 0.5;
+	box-shadow: none;
 }
 
 .positiveButton:hover,
 .positiveButton:focus-visible {
-  border-color: rgba(174, 28, 63, 0.34);
+	border-color: rgba(174, 28, 63, 0.34);
 }
 
 .negativeButton:hover,
 .negativeButton:focus-visible {
-  border-color: rgba(17, 17, 17, 0.26);
+	border-color: rgba(17, 17, 17, 0.26);
 }
 
 .icon {
-  width: 1.35rem;
-  height: 1.35rem;
-  fill: transparent;
-  transition:
-    fill 160ms ease,
-    color 160ms ease,
-    transform 180ms ease;
+	width: 1.35rem;
+	height: 1.35rem;
+	fill: transparent;
+	transition:
+		fill 160ms ease,
+		color 160ms ease,
+		transform 180ms ease;
 }
 
 .positiveButton:active .icon,
 .positiveButton[data-pressed="true"] .icon {
-  color: #ae1c3f;
-  fill: currentColor;
-  transform: scale(0.93);
+	color: #ae1c3f;
+	fill: currentColor;
+	transform: scale(0.93);
 }
 
 .negativeButton:active .icon,
 .negativeButton[data-pressed="true"] .icon {
-  color: #111111;
-  fill: currentColor;
-  transform: scale(0.93);
+	color: #111111;
+	fill: currentColor;
+	transform: scale(0.93);
 }
 
 .badge {
-  position: absolute;
-  top: -0.45rem;
-  right: -0.55rem;
-  min-width: 2.35rem;
-  min-height: 1.5rem;
-  border-radius: 999px;
-  border-width: 1px;
-  padding: 0.18rem 0.46rem;
-  font-family: var(--font-mono);
-  font-size: 0.64rem;
-  line-height: 1;
-  text-transform: uppercase;
-  box-shadow: 0 10px 18px rgba(17, 17, 17, 0.08);
+	position: absolute;
+	top: -0.45rem;
+	right: -0.55rem;
+	min-width: 2.35rem;
+	min-height: 1.5rem;
+	border-radius: 999px;
+	border-width: 1px;
+	padding: 0.18rem 0.46rem;
+	font-family: var(--font-mono);
+	font-size: 0.64rem;
+	line-height: 1;
+	text-transform: uppercase;
+	box-shadow: 0 10px 18px rgba(17, 17, 17, 0.08);
 }
 
 .badgePositive {
-  border-color: rgba(174, 28, 63, 0.22);
-  background: #ae1c3f;
-  color: #fff9fb;
+	border-color: rgba(174, 28, 63, 0.22);
+	background: #ae1c3f;
+	color: #fff9fb;
 }
 
 .badgeNegative {
-  border-color: rgba(17, 17, 17, 0.12);
-  background: #111111;
-  color: #f7f3ec;
+	border-color: rgba(17, 17, 17, 0.12);
+	background: #111111;
+	color: #f7f3ec;
 }
 
 .badgeFlash {
-  animation: badgePulse 0.72s cubic-bezier(0.2, 0.8, 0.2, 1);
+	animation: badgePulse 0.72s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .note {
-  margin: 0;
-  text-align: center;
-  font-family: var(--font-mono);
-  font-size: 0.52rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(17, 17, 17, 0.36);
+	margin: 0;
+	text-align: center;
+	font-family: var(--font-mono);
+	font-size: 0.52rem;
+	letter-spacing: 0.16em;
+	text-transform: uppercase;
+	color: rgba(17, 17, 17, 0.36);
 }
 
 @keyframes badgePulse {
-  0% {
-    filter: brightness(1);
-    transform: scale(1);
-    box-shadow: 0 10px 18px rgba(17, 17, 17, 0.08);
-  }
+	0% {
+		filter: brightness(1);
+		transform: scale(1);
+		box-shadow: 0 10px 18px rgba(17, 17, 17, 0.08);
+	}
 
-  35% {
-    filter: brightness(1.18);
-    transform: scale(1.08);
-    box-shadow: 0 14px 26px rgba(17, 17, 17, 0.15);
-  }
+	35% {
+		filter: brightness(1.18);
+		transform: scale(1.08);
+		box-shadow: 0 14px 26px rgba(17, 17, 17, 0.15);
+	}
 
-  100% {
-    filter: brightness(1);
-    transform: scale(1);
-    box-shadow: 0 10px 18px rgba(17, 17, 17, 0.08);
-  }
+	100% {
+		filter: brightness(1);
+		transform: scale(1);
+		box-shadow: 0 10px 18px rgba(17, 17, 17, 0.08);
+	}
+}
+
+@keyframes subLabelBreath {
+	0% {
+		opacity: 0.7;
+		transform: translateY(0);
+		letter-spacing: 0.14em;
+		color: rgba(17, 17, 17, 0.36);
+	}
+
+	40% {
+		opacity: 1;
+		transform: translateY(-1px);
+		letter-spacing: 0.16em;
+		color: rgba(17, 17, 17, 0.52);
+	}
+
+	100% {
+		opacity: 0.82;
+		transform: translateY(0);
+		letter-spacing: 0.14em;
+		color: rgba(17, 17, 17, 0.36);
+	}
 }
 
 @media (max-width: 540px) {
-  .root {
-    gap: 0.9rem;
-  }
+	.root {
+		gap: 0.9rem;
+	}
 
   .subLabel {
-    margin-top: -0.28rem;
+    margin-top: -0.5rem;
     font-size: 0.46rem;
     letter-spacing: 0.12em;
   }
 
-  .row {
-    gap: 0.9rem;
-  }
+	.row {
+		gap: 0.9rem;
+	}
 
-  .button {
-    width: 2.95rem;
-    height: 2.95rem;
-  }
+	.button {
+		width: 2.95rem;
+		height: 2.95rem;
+	}
 
-  .icon {
-    width: 1.22rem;
-    height: 1.22rem;
-  }
+	.icon {
+		width: 1.22rem;
+		height: 1.22rem;
+	}
 
-  .badge {
-    right: -0.4rem;
-    min-width: 2.1rem;
-    min-height: 1.4rem;
-    font-size: 0.6rem;
-  }
+	.badge {
+		right: -0.4rem;
+		min-width: 2.1rem;
+		min-height: 1.4rem;
+		font-size: 0.6rem;
+	}
 }
 
 @media (min-width: 768px) {
-  .root {
-    justify-self: center;
-  }
+	.root {
+		justify-self: center;
+	}
 }

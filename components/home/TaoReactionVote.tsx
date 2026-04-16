@@ -221,7 +221,16 @@ export function TaoReactionVote({
 	return (
 		<div className={styles.root} data-reaction-widget>
 			<p className={styles.label}>{heading}</p>
-			<p className={styles.subLabel}>{liveLabel}</p>
+			<p
+				className={[
+					styles.subLabel,
+					flashState.heart || flashState.heartOff ? styles.subLabelPulse : "",
+				]
+					.filter(Boolean)
+					.join(" ")}
+			>
+				{liveLabel}
+			</p>
 
 			<div className={styles.row}>
 				<button
