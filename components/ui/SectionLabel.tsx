@@ -1,3 +1,5 @@
+import styles from '@/components/ui/SectionLabel.module.css';
+
 export function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-ink/48">{children}</p>;
+  return <p className={styles.label}>{children}</p>;
 }
