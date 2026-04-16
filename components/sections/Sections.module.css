@@ -1,0 +1,194 @@
+.card {
+  border-radius: 2rem;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.72);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-whisper);
+  backdrop-filter: blur(16px);
+}
+
+.cardHeading {
+  margin-top: 1rem;
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 4vw, 4rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+}
+
+.cardText {
+  margin-top: 1.2rem;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: rgba(17, 17, 17, 0.7);
+}
+
+.subtleText {
+  margin-top: 1rem;
+  font-size: 0.94rem;
+  line-height: 1.7;
+  color: rgba(17, 17, 17, 0.56);
+}
+
+.emailLink {
+  display: inline-block;
+  margin-top: 2rem;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 3vw, 2.9rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+}
+
+.list {
+  margin: 2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.listItem {
+  border-bottom: 1px solid rgba(17, 17, 17, 0.12);
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.9rem;
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: rgba(17, 17, 17, 0.68);
+}
+
+.listItem:last-child {
+  margin-bottom: 0;
+  padding-bottom: 0;
+  border-bottom: 0;
+}
+
+.quoteStack {
+  margin-top: 2rem;
+  display: grid;
+  gap: 1rem;
+}
+
+.quoteCard {
+  border-radius: 1.2rem;
+  border: 1px solid rgba(17, 17, 17, 0.14);
+  background: rgba(243, 242, 238, 0.7);
+  padding: 1rem 1.1rem;
+}
+
+.quoteText {
+  font-family: var(--font-serif);
+  font-size: 1.7rem;
+  line-height: 1.1;
+  font-style: italic;
+}
+
+.timelineSection {
+  border-top: 1px solid rgba(17, 17, 17, 0.1);
+  padding: 5rem 1.25rem 6rem;
+}
+
+.timelineInner {
+  width: min(1440px, calc(100vw - 40px));
+  margin: 0 auto;
+}
+
+.timelineHeading {
+  margin-top: 1rem;
+  max-width: 56rem;
+  font-family: var(--font-serif);
+  font-size: clamp(2.8rem, 6vw, 4.8rem);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+}
+
+.timelineIntro {
+  margin-top: 1.5rem;
+  max-width: 48rem;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: rgba(17, 17, 17, 0.7);
+}
+
+.timelineGrid {
+  margin-top: 3rem;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.timelineCard {
+  border-radius: 1.8rem;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.68);
+  padding: 1.6rem;
+  box-shadow: var(--shadow-whisper);
+  backdrop-filter: blur(16px);
+}
+
+.timelinePeriod {
+  font-family: var(--font-mono);
+  font-size: 0.69rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.44);
+}
+
+.timelineOrganization {
+  margin-top: 1.4rem;
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  line-height: 0.94;
+}
+
+.timelineRole {
+  margin-top: 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(17, 17, 17, 0.66);
+}
+
+.timelineSummary {
+  margin-top: 1.25rem;
+  font-size: 0.98rem;
+  line-height: 1.8;
+  color: rgba(17, 17, 17, 0.72);
+}
+
+.heroSection {
+  padding: 3rem 1.25rem 5rem;
+}
+
+.heroInner {
+  width: min(1440px, calc(100vw - 40px));
+  margin: 0 auto;
+}
+
+.heroTitle {
+  margin-top: 1.4rem;
+  font-family: var(--font-sans);
+  font-size: clamp(5rem, 16vw, 14rem);
+  font-weight: 800;
+  line-height: 0.82;
+  letter-spacing: -0.09em;
+  text-transform: uppercase;
+}
+
+.heroIntro {
+  margin-top: 1.8rem;
+  max-width: 46rem;
+  font-size: 1rem;
+  line-height: 1.8;
+  color: rgba(17, 17, 17, 0.7);
+}
+
+.heroActions,
+.actionRow {
+  margin-top: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+@media (min-width: 1024px) {
+  .timelineGrid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

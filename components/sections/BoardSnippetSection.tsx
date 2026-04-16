@@ -1,5 +1,6 @@
 import { SectionLabel } from '@/components/ui/SectionLabel';
 import type { Locale } from '@/data/site-content';
+import sectionStyles from '@/components/sections/Sections.module.css';
 
 const copy = {
   en: {
@@ -24,14 +25,14 @@ export function BoardSnippetSection({ locale }: { locale: Locale }) {
   const content = copy[locale];
 
   return (
-    <section className="rounded-[2rem] border border-line bg-white/72 p-7 shadow-whisper backdrop-blur">
+    <section className={sectionStyles.card}>
       <SectionLabel>{content.label}</SectionLabel>
-      <h3 className="mt-4 font-serif text-4xl tracking-tight text-ink">{content.heading}</h3>
-      <p className="mt-5 text-base leading-8 text-ink/70">{content.intro}</p>
-      <div className="mt-8 space-y-4">
+      <h3 className={sectionStyles.cardHeading}>{content.heading}</h3>
+      <p className={sectionStyles.cardText}>{content.intro}</p>
+      <div className={sectionStyles.quoteStack}>
         {content.entries.map((entry) => (
-          <article key={entry} className="rounded-[1.2rem] border border-line/80 bg-ivory/70 px-5 py-4">
-            <p className="font-serif text-2xl italic leading-snug text-ink">“{entry}”</p>
+          <article key={entry} className={sectionStyles.quoteCard}>
+            <p className={sectionStyles.quoteText}>“{entry}”</p>
           </article>
         ))}
       </div>
