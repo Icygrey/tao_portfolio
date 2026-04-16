@@ -14,13 +14,6 @@ export type ContactLink = {
 	href: string;
 };
 
-export type BrandLinkConfig = {
-	label: string;
-	status: "coming-soon" | "external";
-	internalHoldingPath: string;
-	externalUrl?: string;
-};
-
 export type HomeWorkItem = {
 	index: string;
 	title: string;
@@ -93,7 +86,6 @@ type LocaleContent = {
 	};
 	footerNote: string;
 	contactLinks: ContactLink[];
-	brandLink: BrandLinkConfig;
 	seo: {
 		homeTitle: string;
 		homeDescription: string;
@@ -274,11 +266,6 @@ export const siteContent: Record<Locale, LocaleContent> = {
 			{ label: "GitHub", href: "https://github.com/Icygrey" },
 			{ label: "LinkedIn", href: "https://www.linkedin.com/in/tao-huang-usc/" },
 		],
-		brandLink: {
-			label: "Future label",
-			status: "coming-soon",
-			internalHoldingPath: "/en/brand",
-		},
 		seo: {
 			homeTitle: "Tao Huang — Full Stack Engineer",
 			homeDescription:
@@ -460,11 +447,6 @@ export const siteContent: Record<Locale, LocaleContent> = {
 			{ label: "GitHub", href: "https://github.com/Icygrey" },
 			{ label: "LinkedIn", href: "https://www.linkedin.com/in/tao-huang-usc/" },
 		],
-		brandLink: {
-			label: "未来品牌",
-			status: "coming-soon",
-			internalHoldingPath: "/zh/brand",
-		},
 		seo: {
 			homeTitle: "Tao Huang — Full Stack Engineer",
 			homeDescription:

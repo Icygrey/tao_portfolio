@@ -1,6 +1,4 @@
-import Link from 'next/link';
 import { getLocaleContent, type HomeWorkItem, type Locale, resumeFile } from '@/data/site-content';
-import { getLocalizedPath } from '@/lib/locale';
 import styles from '@/components/pages/HomePage.module.css';
 
 const toneClassNames: Record<string, string> = {
@@ -56,9 +54,6 @@ function WorkCard({ item }: { item: HomeWorkItem }) {
 
 export function HomePage({ locale }: { locale: Locale }) {
   const content = getLocaleContent(locale);
-  const aboutPath = getLocalizedPath(locale, 'about');
-  const contactPath = getLocalizedPath(locale, 'contact');
-  const brandPath = getLocalizedPath(locale, 'brand');
 
   return (
     <main className={styles.main}>
@@ -160,9 +155,9 @@ export function HomePage({ locale }: { locale: Locale }) {
 
         <div className={styles.footerLinksWrap}>
           <div className={styles.footerLinks}>
-            <Link href={aboutPath}>{locale === 'en' ? 'ABOUT' : '关于'}</Link>
-            <Link href={contactPath}>{locale === 'en' ? 'CONTACT' : '联系'}</Link>
-            <Link href={brandPath}>{locale === 'en' ? 'BRAND' : '品牌'}</Link>
+            <span>ABOUT</span>
+            <span>CONTACT</span>
+            <span>BRAND</span>
             <span>{content.home.footerLegal}</span>
           </div>
         </div>
