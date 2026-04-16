@@ -100,7 +100,7 @@ type LocaleContent = {
 	};
 };
 
-export const resumeFile = "/resume/Resume_Tao_Huang_2025.pdf";
+export const resumeFile = "/resume/Tao_Huang_2025.pdf";
 
 export const siteContent: Record<Locale, LocaleContent> = {
 	en: {
