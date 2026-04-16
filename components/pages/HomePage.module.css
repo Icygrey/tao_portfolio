@@ -616,6 +616,42 @@
 .workCardFour {
 }
 
+@media (min-width: 541px) and (max-width: 1279px) {
+	.footerBottom {
+		padding-right: clamp(0.85rem, 2.6vw, 2.4rem);
+	}
+
+	.footerSocial {
+		max-width: min(30rem, calc(100vw - 7rem));
+		white-space: normal;
+		line-height: 1.52;
+		text-wrap: balance;
+	}
+
+	.footerSecondaryContact {
+		display: block;
+		margin-top: 0.24rem;
+	}
+
+	.footerHoverPreview {
+		right: 0.6rem;
+	}
+}
+
+@media (min-width: 1280px) and (max-width: 1600px) {
+	.footerBottom {
+		padding-right: clamp(1rem, 2vw, 2.2rem);
+	}
+
+	.footerSocial {
+		margin-right: clamp(0.4rem, 1.2vw, 1.4rem);
+	}
+
+	.footerHoverPreview {
+		right: clamp(0.4rem, 1vw, 1rem);
+	}
+}
+
 @media (min-width: 768px) {
 	.heroSection {
 		padding: 5rem 2rem 2rem;
