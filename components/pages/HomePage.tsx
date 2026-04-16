@@ -63,7 +63,7 @@ export function HomePage({ locale }: { locale: Locale }) {
   const statementSectionRef = useRef<HTMLElement | null>(null);
   const footerSectionRef = useRef<HTMLElement | null>(null);
   const eyebrowRef = useRef<HTMLParagraphElement | null>(null);
-  const emailRef = useRef<HTMLAnchorElement | null>(null);
+  const heroNavRef = useRef<HTMLDivElement | null>(null);
   const marqueeWrapRef = useRef<HTMLDivElement | null>(null);
   const badgeRef = useRef<HTMLSpanElement | null>(null);
   const taoRef = useRef<HTMLSpanElement | null>(null);
@@ -72,8 +72,8 @@ export function HomePage({ locale }: { locale: Locale }) {
   const signalClusterRef = useRef<HTMLDivElement | null>(null);
   const statementRef = useRef<HTMLParagraphElement | null>(null);
   const resumeLinkRef = useRef<HTMLAnchorElement | null>(null);
-  const footerPromptRef = useRef<HTMLParagraphElement | null>(null);
   const footerMarqueeRef = useRef<HTMLDivElement | null>(null);
+  const footerConnectRef = useRef<HTMLParagraphElement | null>(null);
   const [taoWord = 'TAO', huangWord = 'HUANG'] = content.home.marquee.split(/\s+/);
 
   useLayoutEffect(() => {
@@ -111,7 +111,7 @@ export function HomePage({ locale }: { locale: Locale }) {
           const signalBoxes = gsap.utils.toArray<HTMLElement>('[data-signal-box]', rootRef.current);
           const workCards = gsap.utils.toArray<HTMLElement>('[data-work-card]', rootRef.current);
           const serviceCards = gsap.utils.toArray<HTMLElement>('[data-service-card]', rootRef.current);
-          const footerLinks = gsap.utils.toArray<HTMLElement>('[data-footer-link]', rootRef.current);
+          const heroNavItems = gsap.utils.toArray<HTMLElement>('[data-hero-nav-item]', rootRef.current);
 
           const taoSplit = SplitText.create(taoRef.current, { type: 'chars' });
           splits.push(taoSplit);
@@ -125,28 +125,27 @@ export function HomePage({ locale }: { locale: Locale }) {
 
           const playHuangCycle = () => {
             const huangCycle = gsap.timeline();
-            huangCycle
-              .to(huangRef.current, {
-                duration: 1.28,
-                scrambleText: {
-                  text: huangWord,
-                  chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%*',
-                  speed: 0.85,
-                  revealDelay: 0.08,
-                  tweenLength: false,
-                },
-              }, 0);
+            huangCycle.to(huangRef.current, {
+              duration: 1.28,
+              scrambleText: {
+                text: huangWord,
+                chars: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%*',
+                speed: 0.85,
+                revealDelay: 0.08,
+                tweenLength: false,
+              },
+            });
 
             return huangCycle;
           };
 
-          gsap.set([eyebrowRef.current, emailRef.current, introRef.current], { y: 18, opacity: 0 });
+          gsap.set([eyebrowRef.current, introRef.current], { y: 18, opacity: 0 });
+          gsap.set(heroNavItems, { y: 18, opacity: 0 });
           gsap.set(signalBoxes, { y: 24, opacity: 0, scale: 0.92, transformOrigin: '50% 100%' });
           gsap.set(workCards, { y: 64, opacity: 0.3, rotateZ: (index: number) => (index % 2 === 0 ? -1.4 : 1.4) });
           gsap.set(serviceCards, { y: 48, opacity: 0 });
           gsap.set(resumeLinkRef.current, { y: 24, opacity: 0 });
-          gsap.set(footerPromptRef.current, { y: 26, opacity: 0.35 });
-          gsap.set(footerLinks, { y: 20, opacity: 0.4 });
+          gsap.set(footerConnectRef.current, { y: 20, opacity: 0.4 });
           gsap.set(footerMarqueeRef.current, { yPercent: 18, opacity: 0.55, scale: 0.96 });
           gsap.set(marqueeWrapRef.current, { transformPerspective: 1200 });
           if (statementSplit) {
@@ -169,7 +168,8 @@ export function HomePage({ locale }: { locale: Locale }) {
               0.06,
             )
             .add(playHuangCycle(), 0.18)
-            .to([eyebrowRef.current, emailRef.current, introRef.current], { y: 0, opacity: 1, duration: 0.92, stagger: 0.08 }, 0.28)
+            .to([eyebrowRef.current, introRef.current], { y: 0, opacity: 1, duration: 0.92, stagger: 0.08 }, 0.28)
+            .to(heroNavItems, { y: 0, opacity: 1, duration: 0.7, stagger: 0.06 }, 0.34)
             .to(
               signalBoxes,
               {
@@ -199,7 +199,7 @@ export function HomePage({ locale }: { locale: Locale }) {
             .to(marqueeWrapRef.current, { yPercent: 12, scale: 0.93, transformOrigin: '50% 50%', ease: 'none' }, 0)
             .to(introRef.current, { y: 54, opacity: 0.22, ease: 'none' }, 0)
             .to(signalClusterRef.current, { y: -24, opacity: 0.5, ease: 'none' }, 0)
-            .to([eyebrowRef.current, emailRef.current], { y: -12, opacity: 0.42, ease: 'none' }, 0);
+            .to([eyebrowRef.current, heroNavRef.current], { y: -12, opacity: 0.42, ease: 'none' }, 0);
 
           workCards.forEach((card, index) => {
             const targetY = [-36, 62, -72, 48][index] ?? 42;
@@ -256,8 +256,7 @@ export function HomePage({ locale }: { locale: Locale }) {
             },
           })
             .to(footerMarqueeRef.current, { yPercent: 0, opacity: 1, scale: 1, ease: 'none' }, 0)
-            .to(footerPromptRef.current, { y: 0, opacity: 1, ease: 'none' }, 0.14)
-            .to(footerLinks, { y: 0, opacity: 1, stagger: 0.05, ease: 'none' }, 0.18);
+            .to(footerConnectRef.current, { y: 0, opacity: 1, ease: 'none' }, 0.18);
 
           ScrollTrigger.refresh();
         }, rootRef);
@@ -282,9 +281,15 @@ export function HomePage({ locale }: { locale: Locale }) {
       <section ref={heroSectionRef} className={styles.heroSection}>
         <div className={styles.heroTop}>
           <p ref={eyebrowRef} className={styles.heroEyebrow}>{content.home.eyebrow}</p>
-          <a ref={emailRef} className={styles.heroEmail} href="mailto:thuang0209@outlook.com">
-            {content.home.emailLabel}
-          </a>
+          <div ref={heroNavRef} className={styles.heroNav}>
+            <p className={styles.heroNavPrompt} data-hero-nav-item>LET&apos;S GET CREATIVE.</p>
+            <div className={styles.heroNavLinks}>
+              <span data-hero-nav-item>ABOUT</span>
+              <span data-hero-nav-item>CONTACT</span>
+              <span data-hero-nav-item>BRAND</span>
+              <span data-hero-nav-item>{content.home.footerLegal}</span>
+            </div>
+          </div>
         </div>
 
         <div ref={marqueeWrapRef} className={styles.marqueeWrap}>
@@ -359,7 +364,8 @@ export function HomePage({ locale }: { locale: Locale }) {
           </div>
 
           <div className={styles.footerBottom}>
-            <p className={styles.footerSocial}>
+            <div aria-hidden="true" />
+            <p ref={footerConnectRef} className={styles.footerSocial}>
               <a className={styles.footerSocialLink} href="https://www.linkedin.com/in/tao-huang-usc/" target="_blank" rel="noreferrer">
                 {content.home.footerSocialLabel.split('LINKEDIN')[0]}LINKEDIN
               </a>
@@ -370,20 +376,10 @@ export function HomePage({ locale }: { locale: Locale }) {
                 </>
               ) : null}
             </p>
-            <p ref={footerPromptRef} className={styles.footerPrompt}>{content.home.footerPrompt}</p>
           </div>
         </div>
 
         <div ref={footerMarqueeRef} className={styles.footerMarquee}>{content.home.marquee}</div>
-
-        <div className={styles.footerLinksWrap}>
-          <div className={styles.footerLinks}>
-            <span data-footer-link>ABOUT</span>
-            <span data-footer-link>CONTACT</span>
-            <span data-footer-link>BRAND</span>
-            <span data-footer-link>{content.home.footerLegal}</span>
-          </div>
-        </div>
       </section>
     </main>
   );
