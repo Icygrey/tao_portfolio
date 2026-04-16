@@ -471,6 +471,10 @@
   text-underline-offset: 0.25rem;
 }
 
+.footerSecondaryContact {
+  display: inline;
+}
+
 .footerHoverTrigger {
   position: relative;
   display: inline-flex;
@@ -525,6 +529,105 @@
   color: white;
   filter: blur(2.4px);
   will-change: transform, opacity;
+}
+
+@media (max-width: 540px) {
+  .heroSection {
+    padding: 4.25rem 0.75rem 1.5rem;
+  }
+
+  .heroTop {
+    gap: 0.9rem;
+  }
+
+  .heroEyebrow,
+  .heroNavPrompt,
+  .heroNavLinks span {
+    font-size: 0.62rem;
+    letter-spacing: 0.16em;
+  }
+
+  .heroNav {
+    gap: 0.75rem;
+  }
+
+  .heroNavLinks {
+    gap: 0.55rem 0.85rem;
+    max-width: 10.5rem;
+  }
+
+  .marquee {
+    margin-left: -0.75%;
+    gap: 0.028em;
+    font-size: clamp(4.15rem, 15.9vw, 5.4rem);
+    letter-spacing: -0.07em;
+  }
+
+  .marqueeWordAccent {
+    min-width: 4.75ch;
+  }
+
+  .heroBottom {
+    gap: 2rem;
+  }
+
+  .heroIntro {
+    max-width: 19rem;
+    font-size: 0.96rem;
+    line-height: 1.04;
+  }
+
+  .footerSection {
+    min-height: 84svh;
+    padding: 1.1rem 0.75rem 1.5rem;
+  }
+
+  .footerInner {
+    min-height: 74svh;
+  }
+
+  .footerMail,
+  .footerSocial {
+    font-size: 0.68rem;
+    letter-spacing: 0.14em;
+  }
+
+  .footerBottom {
+    padding-bottom: 7.5rem;
+  }
+
+  .footerSocial {
+    max-width: 16.5rem;
+    white-space: normal;
+    line-height: 1.55;
+  }
+
+  .footerSecondaryContact {
+    display: block;
+    margin-top: 0.2rem;
+  }
+
+  .footerMarquee {
+    left: 2.75%;
+    bottom: 1.4rem;
+    font-size: clamp(4rem, 18.5vw, 5.6rem);
+    letter-spacing: -0.07em;
+  }
+
+  .footerHoverPreview {
+    right: 50%;
+    left: auto;
+    bottom: calc(100% + 0.9rem);
+    width: min(12.5rem, 68vw);
+    transform: translate3d(24%, 12px, 0) scale(0.96);
+    transform-origin: center bottom;
+  }
+
+  .footerHoverTrigger:hover .footerHoverPreview,
+  .footerHoverTrigger:focus-visible .footerHoverPreview,
+  .footerHoverTrigger:focus-within .footerHoverPreview {
+    transform: translate3d(24%, 0, 0) scale(1);
+  }
 }
 
 .workCardOne {

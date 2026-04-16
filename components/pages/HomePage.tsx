@@ -525,7 +525,7 @@ export function HomePage({ locale }: { locale: Locale }) {
 								{content.home.footerSocialLabel.split("LINKEDIN")[0]}LINKEDIN
 							</a>
 							{content.home.footerSocialLabel.includes("WHATSAPP") ? (
-								<>
+								<span className={styles.footerSecondaryContact}>
 									{", OR ADD ME ON "}
 									<span
 										className={[
@@ -546,7 +546,7 @@ export function HomePage({ locale }: { locale: Locale }) {
 											/>
 										</span>
 									</span>
-								</>
+								</span>
 							) : null}
 						</p>
 					</div>
