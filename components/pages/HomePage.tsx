@@ -9,6 +9,12 @@ import {
 	resumeFile,
 } from "@/data/site-content";
 import { TaoReactionVote } from "@/components/home/TaoReactionVote";
+import {
+	Tooltip,
+	TooltipContent,
+	TooltipProvider,
+	TooltipTrigger,
+} from "@/components/ui/tooltip";
 import styles from "@/components/pages/HomePage.module.css";
 
 const toneClassNames: Record<string, string> = {
@@ -67,6 +73,24 @@ function WorkCard({ item }: { item: HomeWorkItem }) {
 			</div>
 			<p className={styles.workCaption}>{item.title}</p>
 		</article>
+	);
+}
+
+function ComingSoonNavItem({ label }: { label: string }) {
+	return (
+		<Tooltip>
+			<TooltipTrigger asChild>
+				<button
+					type="button"
+					className={styles.heroNavGhostButton}
+					data-hero-nav-item
+					aria-label={`${label}. Still coding...`}
+				>
+					{label}
+				</button>
+			</TooltipTrigger>
+			<TooltipContent side="bottom">Still coding...</TooltipContent>
+		</Tooltip>
 	);
 }
 
@@ -384,12 +408,14 @@ export function HomePage({ locale }: { locale: Locale }) {
 						<p className={styles.heroNavPrompt} data-hero-nav-item>
 							LET&apos;S GET CREATIVE.
 						</p>
-						<div className={styles.heroNavLinks}>
-							<span data-hero-nav-item>ABOUT</span>
-							<span data-hero-nav-item>CONTACT</span>
-							<span data-hero-nav-item>BRAND</span>
-							<span data-hero-nav-item>{content.home.footerLegal}</span>
-						</div>
+						<TooltipProvider delayDuration={120}>
+							<div className={styles.heroNavLinks}>
+								<ComingSoonNavItem label="ABOUT" />
+								<ComingSoonNavItem label="CONTACT" />
+								<ComingSoonNavItem label="BRAND" />
+								<ComingSoonNavItem label={content.home.footerLegal} />
+							</div>
+						</TooltipProvider>
 					</div>
 				</div>
 
