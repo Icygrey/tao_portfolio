@@ -8,6 +8,7 @@ import {
 	type Locale,
 	resumeFile,
 } from "@/data/site-content";
+import { TaoReactionVote } from "@/components/home/TaoReactionVote";
 import styles from "@/components/pages/HomePage.module.css";
 
 const toneClassNames: Record<string, string> = {
@@ -16,12 +17,6 @@ const toneClassNames: Record<string, string> = {
 	black: styles.toneBlack,
 	violet: styles.toneViolet,
 };
-
-const signalClassNames = [
-	styles.signalBoxDark,
-	styles.signalBoxLight,
-	styles.signalBoxRust,
-];
 
 const indexClassNames: Record<string, string> = {
 	"(1)": styles.workCardOne,
@@ -89,7 +84,7 @@ export function HomePage({ locale }: { locale: Locale }) {
 	const taoRef = useRef<HTMLSpanElement | null>(null);
 	const huangRef = useRef<HTMLSpanElement | null>(null);
 	const introRef = useRef<HTMLParagraphElement | null>(null);
-	const signalClusterRef = useRef<HTMLDivElement | null>(null);
+	const reactionWidgetRef = useRef<HTMLDivElement | null>(null);
 	const statementRef = useRef<HTMLParagraphElement | null>(null);
 	const resumeLinkRef = useRef<HTMLAnchorElement | null>(null);
 	const footerMarqueeRef = useRef<HTMLDivElement | null>(null);
@@ -134,10 +129,6 @@ export function HomePage({ locale }: { locale: Locale }) {
 
 				const splits: Array<{ revert: () => void }> = [];
 				const ctx = gsap.context(() => {
-					const signalBoxes = gsap.utils.toArray<HTMLElement>(
-						"[data-signal-box]",
-						rootRef.current,
-					);
 					const workCards = gsap.utils.toArray<HTMLElement>(
 						"[data-work-card]",
 						rootRef.current,
@@ -182,10 +173,10 @@ export function HomePage({ locale }: { locale: Locale }) {
 						opacity: 0,
 					});
 					gsap.set(heroNavItems, { y: 18, opacity: 0 });
-					gsap.set(signalBoxes, {
+					gsap.set(reactionWidgetRef.current, {
 						y: 24,
 						opacity: 0,
-						scale: 0.92,
+						scale: 0.94,
 						transformOrigin: "50% 100%",
 					});
 					gsap.set(workCards, {
@@ -239,21 +230,20 @@ export function HomePage({ locale }: { locale: Locale }) {
 							0.34,
 						)
 						.to(
-							signalBoxes,
+							reactionWidgetRef.current,
 							{
 								keyframes: [
-									{ y: 24, opacity: 0, scale: 0.92, duration: 0 },
+									{ y: 24, opacity: 0, scale: 0.94, duration: 0 },
 									{
 										y: 0,
 										opacity: 1,
 										scale: 1,
-										duration: 0.55,
+										duration: 0.62,
 										ease: "power3.out",
 									},
-									{ y: -4, duration: 0.16, ease: "power1.inOut" },
+									{ y: -3, duration: 0.16, ease: "power1.inOut" },
 									{ y: 0, duration: 0.16, ease: "power1.out" },
 								],
-								stagger: 0.08,
 							},
 							0.76,
 						)
@@ -289,7 +279,7 @@ export function HomePage({ locale }: { locale: Locale }) {
 						)
 						.to(introRef.current, { y: 54, opacity: 0.22, ease: "none" }, 0)
 						.to(
-							signalClusterRef.current,
+							reactionWidgetRef.current,
 							{ y: -24, opacity: 0.5, ease: "none" },
 							0,
 						)
@@ -430,24 +420,13 @@ export function HomePage({ locale }: { locale: Locale }) {
 						{content.home.intro}
 					</p>
 					<div aria-hidden="true" />
-					<div ref={signalClusterRef} className={styles.signalCluster}>
-						<p className={styles.signalLabel}>{content.home.stripLabel}</p>
-						<div className={styles.signalRow}>
-							{content.home.stripItems.map((item, index) => (
-								<div
-									key={item}
-									className={[
-										styles.signalBox,
-										signalClassNames[index] ?? "",
-									].join(" ")}
-									data-signal-box
-								>
-									<span className={styles.signalLetter}>
-										{item.slice(0, 1)}
-									</span>
-								</div>
-							))}
-						</div>
+					<div ref={reactionWidgetRef}>
+						<TaoReactionVote
+							heading={content.home.reaction.heading}
+							liveLabel={content.home.reaction.liveLabel}
+							positiveLabel={content.home.reaction.positiveLabel}
+							negativeLabel={content.home.reaction.negativeLabel}
+						/>
 					</div>
 				</div>
 			</section>

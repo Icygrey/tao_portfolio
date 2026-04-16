@@ -2,6 +2,8 @@
 
 A bilingual Next.js portfolio for Tao Huang, currently focused on the homepage and resume entry points.
 
+taohuang.xyz
+
 ## Stack
 
 - Next.js 13 App Router

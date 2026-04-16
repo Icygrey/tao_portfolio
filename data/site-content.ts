@@ -28,6 +28,13 @@ export type HomeService = {
 	body: string;
 };
 
+export type HomeReactionCopy = {
+	heading: string;
+	liveLabel: string;
+	positiveLabel: string;
+	negativeLabel: string;
+};
+
 type LocaleContent = {
 	locale: Locale;
 	navigation: {
@@ -42,8 +49,7 @@ type LocaleContent = {
 		marquee: string;
 		badge: string;
 		intro: string;
-		stripLabel: string;
-		stripItems: string[];
+		reaction: HomeReactionCopy;
 		works: HomeWorkItem[];
 		statement: string;
 		statementMuted: string;
@@ -118,8 +124,12 @@ export const siteContent: Record<Locale, LocaleContent> = {
 			badge: "@",
 			intro:
 				"Based in San Jose, working globally — I am a full stack engineer shaping quiet digital products, structured interfaces, and future-facing brand systems. Available for thoughtful collaborations.",
-			stripLabel: "SELECTED SIGNALS",
-			stripItems: ["SYSTEMS", "PRODUCT", "BRAND"],
+			reaction: {
+				heading: "DO U LIKE TAO?",
+				liveLabel: "(The world is voting live)",
+				positiveLabel: "Add one more heart for Tao",
+				negativeLabel: "Add one more anti-heart for Tao",
+			},
 			works: [
 				{
 					index: "(1)",
@@ -299,8 +309,12 @@ export const siteContent: Record<Locale, LocaleContent> = {
 			badge: "TH",
 			intro:
 				"立足 San Jose，面向全球工作 —— 我是一名全栈工程师，关注克制的数字产品、清晰的界面结构，以及未来可延展的品牌系统。欢迎有质量的合作。",
-			stripLabel: "关键线索",
-			stripItems: ["系统", "产品", "品牌"],
+			reaction: {
+				heading: "你喜欢 TAO 吗",
+				liveLabel: "（The world is voting live）",
+				positiveLabel: "为 Tao 再加一个喜欢",
+				negativeLabel: "为 Tao 再加一个不喜欢",
+			},
 			works: [
 				{
 					index: "(1)",
