@@ -237,7 +237,8 @@ export function HomePage({ locale }: { locale: Locale }) {
 					});
 					gsap.set(workCards, {
 						y: 64,
-						opacity: 0.3,
+						opacity: 0.22,
+						yPercent: 8,
 						rotateZ: (index: number) => (index % 2 === 0 ? -1.4 : 1.4),
 					});
 					gsap.set(serviceCards, { y: 48, opacity: 0 });
@@ -350,13 +351,25 @@ export function HomePage({ locale }: { locale: Locale }) {
 						const targetRotate = index % 2 === 0 ? 0.6 : -0.6;
 
 						gsap.to(card, {
-							y: targetY,
 							opacity: 1,
+							yPercent: 0,
+							ease: "none",
+							scrollTrigger: {
+								trigger: card,
+								start: "top 92%",
+								end: "top 68%",
+								scrub: true,
+								invalidateOnRefresh: true,
+							},
+						});
+
+						gsap.to(card, {
+							y: targetY,
 							rotateZ: targetRotate,
 							ease: "none",
 							scrollTrigger: {
 								trigger: gallerySectionRef.current,
-								start: "top 88%",
+								start: "top bottom",
 								end: "bottom top",
 								scrub: 1.2,
 								invalidateOnRefresh: true,
