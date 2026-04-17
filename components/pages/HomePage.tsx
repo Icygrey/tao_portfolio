@@ -526,7 +526,7 @@ export function HomePage({ locale }: { locale: Locale }) {
 					resetTargetTransform(activeMagneticTarget);
 					activeMagneticTarget = nextTarget;
 					setCursorVariant(
-						nextTarget ? nextTarget.dataset.cursorVariant ?? "default" : null,
+						nextTarget ? (nextTarget.dataset.cursorVariant ?? "default") : null,
 					);
 
 					if (!nextTarget) {
@@ -558,9 +558,7 @@ export function HomePage({ locale }: { locale: Locale }) {
 					});
 				};
 
-				const handlePointerMove = (
-					event: PointerEvent | MouseEvent,
-				) => {
+				const handlePointerMove = (event: PointerEvent | MouseEvent) => {
 					pointer.x = event.clientX;
 					pointer.y = event.clientY;
 					syncHoveredTarget();
@@ -858,9 +856,21 @@ export function HomePage({ locale }: { locale: Locale }) {
 							>
 								{content.home.footerSocialLabel.split("LINKEDIN")[0]}LINKEDIN
 							</a>
-							{content.home.footerSocialLabel.includes("WHATSAPP") ? (
-								<span className={styles.footerSecondaryContact}>
-									{", OR ADD ME ON "}
+							<span className={styles.footerSecondaryContact}>
+								{" OR ADD ME ON "}
+								<span className={styles.footerSocialHandles}>
+									<a
+										className={styles.footerSocialLink}
+										href="https://instagram.com/thuang0209"
+										target="_blank"
+										rel="noreferrer"
+										data-cursor-target
+										data-cursor-variant="link"
+										data-magnetic-strength="0.1"
+									>
+										INSTAGRAM
+									</a>{" "}
+									/{" "}
 									<span
 										className={[
 											styles.footerSocialLink,
@@ -884,7 +894,7 @@ export function HomePage({ locale }: { locale: Locale }) {
 										</span>
 									</span>
 								</span>
-							) : null}
+							</span>
 						</p>
 					</div>
 				</div>

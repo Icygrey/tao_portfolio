@@ -371,6 +371,10 @@
 	display: inline;
 }
 
+.footerSocialHandles {
+	white-space: nowrap;
+}
+
 .footerHoverTrigger {
 	position: relative;
 	display: inline-flex;
@@ -493,7 +497,7 @@
 	}
 
 	.footerSocial {
-		max-width: 16.5rem;
+		max-width: 21.5rem;
 		white-space: normal;
 		line-height: 1.55;
 	}
@@ -501,6 +505,7 @@
 	.footerSecondaryContact {
 		display: block;
 		margin-top: 0.2rem;
+		white-space: nowrap;
 	}
 
 	.footerMarquee {

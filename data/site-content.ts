@@ -200,9 +200,10 @@ export const siteContent: Record<Locale, LocaleContent> = {
 				},
 			],
 			footerMailLabel: "MAIL TO THUANG0209@OUTLOOK.COM\nFOR COLLABORATION",
-			footerSocialLabel: "LET'S CONNECT ON LINKEDIN, OR TEXT ME ON WHATSAPP",
+			footerSocialLabel:
+				"LET'S CONNECT ON LINKEDIN, OR ADD ME ON INSTAGRAM / WECHAT",
 			footerPrompt: "LET'S GET CREATIVE.",
-			footerLegal: "LEGAL NOTICE",
+			footerLegal: "LEGAL",
 		},
 		timeline: {
 			label: "Timeline",
@@ -402,7 +403,7 @@ export const siteContent: Record<Locale, LocaleContent> = {
 			],
 			footerMailLabel: "发送邮件到 THUANG0209@OUTLOOK.COM\n以进行合作",
 			footerSocialLabel:
-				"也可以在 LINKEDIN 上联系我，或通过 WHATSAPP 给我发消息",
+				"也可以在 LINKEDIN 上联系我，或在 INSTAGRAM / WECHAT 上找到我",
 			footerPrompt: "一起做点有意思的。",
 			footerLegal: "法律声明",
 		},
