@@ -17,13 +17,6 @@ import {
 } from "@/components/ui/tooltip";
 import styles from "@/components/pages/HomePage.module.css";
 
-const toneClassNames: Record<string, string> = {
-	sky: styles.toneSky,
-	architecture: styles.toneArchitecture,
-	black: styles.toneBlack,
-	violet: styles.toneViolet,
-};
-
 const indexClassNames: Record<string, string> = {
 	"(1)": styles.workCardOne,
 	"(2)": styles.workCardTwo,
@@ -43,36 +36,15 @@ function WorkCard({ item }: { item: HomeWorkItem }) {
 			data-magnetic-strength="0.06"
 		>
 			<p className={styles.workIndex}>{item.index}</p>
-			<div
-				className={[styles.workVisual, toneClassNames[item.tone] ?? ""].join(
-					" ",
-				)}
-				style={{ aspectRatio: item.aspectRatio }}
-			>
-				<div className={styles.workGlow} />
-				{item.tone === "sky" ? (
-					<div className={styles.skyHat}>
-						<div className={styles.skyCopy}>
-							No rules.
-							<br />
-							Just motion.
-						</div>
-					</div>
-				) : null}
-				{item.tone === "black" ? (
-					<>
-						<div className={styles.blackCardOne} />
-						<div className={styles.blackCardTwo} />
-					</>
-				) : null}
-				{item.tone === "architecture" ? (
-					<>
-						<div className={styles.archBase} />
-						<div className={styles.archFrame} />
-						<div className={styles.archOverlay} />
-					</>
-				) : null}
-				{item.tone === "violet" ? <div className={styles.violetHaze} /> : null}
+			<div className={styles.workVisual}>
+				<Image
+					src={item.imageSrc}
+					alt={item.imageAlt}
+					width={item.imageWidth}
+					height={item.imageHeight}
+					className={styles.workPhoto}
+					sizes="(max-width: 767px) min(78vw, 420px), (max-width: 1279px) min(30vw, 420px), 420px"
+				/>
 			</div>
 			<p className={styles.workCaption}>{item.title}</p>
 		</article>
