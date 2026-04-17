@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import {
 	getLocaleContent,
 	type HomeWorkItem,
@@ -77,14 +77,38 @@ function WorkCard({ item }: { item: HomeWorkItem }) {
 }
 
 function ComingSoonNavItem({ label }: { label: string }) {
+	const [isOpen, setIsOpen] = useState(false);
+	const closeTimerRef = useRef<number | null>(null);
+
+	useEffect(() => {
+		return () => {
+			if (closeTimerRef.current !== null) {
+				window.clearTimeout(closeTimerRef.current);
+			}
+		};
+	}, []);
+
+	const handleClick = () => {
+		if (closeTimerRef.current !== null) {
+			window.clearTimeout(closeTimerRef.current);
+		}
+
+		setIsOpen(true);
+		closeTimerRef.current = window.setTimeout(() => {
+			setIsOpen(false);
+			closeTimerRef.current = null;
+		}, 1200);
+	};
+
 	return (
-		<Tooltip>
+		<Tooltip open={isOpen} onOpenChange={setIsOpen}>
 			<TooltipTrigger asChild>
 				<button
 					type="button"
 					className={styles.heroNavGhostButton}
 					data-hero-nav-item
 					aria-label={`${label}. Still coding...`}
+					onClick={handleClick}
 				>
 					{label}
 				</button>
