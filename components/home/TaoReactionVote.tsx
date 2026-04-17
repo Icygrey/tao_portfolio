@@ -245,6 +245,9 @@ export function TaoReactionVote({
 					aria-label={positiveLabel}
 					disabled={!isInteractive}
 					data-reaction-button
+					data-cursor-target
+					data-cursor-variant="button"
+					data-magnetic-strength="0.1"
 					data-pressed={activeTarget === "heart" ? "true" : "false"}
 					onClick={() => void handleVote("heart")}
 					onPointerDown={() => setActiveTarget("heart")}
@@ -281,6 +284,9 @@ export function TaoReactionVote({
 					aria-label={negativeLabel}
 					disabled={!isInteractive}
 					data-reaction-button
+					data-cursor-target
+					data-cursor-variant="button"
+					data-magnetic-strength="0.1"
 					data-pressed={activeTarget === "heart_off" ? "true" : "false"}
 					onClick={() => void handleVote("heart_off")}
 					onPointerDown={() => setActiveTarget("heart_off")}

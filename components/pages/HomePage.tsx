@@ -38,6 +38,9 @@ function WorkCard({ item }: { item: HomeWorkItem }) {
 				.filter(Boolean)
 				.join(" ")}
 			data-work-card
+			data-cursor-target
+			data-cursor-variant="card"
+			data-magnetic-strength="0.06"
 		>
 			<p className={styles.workIndex}>{item.index}</p>
 			<div
@@ -107,6 +110,9 @@ function ComingSoonNavItem({ label }: { label: string }) {
 					type="button"
 					className={styles.heroNavGhostButton}
 					data-hero-nav-item
+					data-cursor-target
+					data-cursor-variant="nav"
+					data-magnetic-strength="0.11"
 					aria-label={`${label}. Still coding...`}
 					onClick={handleClick}
 				>
@@ -137,6 +143,8 @@ export function HomePage({ locale }: { locale: Locale }) {
 	const resumeLinkRef = useRef<HTMLAnchorElement | null>(null);
 	const footerMarqueeRef = useRef<HTMLDivElement | null>(null);
 	const footerConnectRef = useRef<HTMLParagraphElement | null>(null);
+	const cursorDotRef = useRef<HTMLSpanElement | null>(null);
+	const cursorRingRef = useRef<HTMLSpanElement | null>(null);
 	const [taoWord = "TAO", huangWord = "HUANG"] =
 		content.home.marquee.split(/\s+/);
 
@@ -421,8 +429,305 @@ export function HomePage({ locale }: { locale: Locale }) {
 		};
 	}, [huangWord]);
 
+	useLayoutEffect(() => {
+		let mounted = true;
+		let cleanup: (() => void) | undefined;
+
+		void (async () => {
+			const { gsap } = await import("gsap");
+
+			if (
+				!mounted ||
+				!rootRef.current ||
+				!cursorDotRef.current ||
+				!cursorRingRef.current
+			) {
+				return;
+			}
+
+			const finePointerQuery = window.matchMedia(
+				"(hover: hover) and (pointer: fine)",
+			);
+			const reducedMotionQuery = window.matchMedia(
+				"(prefers-reduced-motion: reduce)",
+			);
+
+			if (!finePointerQuery.matches || reducedMotionQuery.matches) {
+				return;
+			}
+
+			const dot = cursorDotRef.current;
+			const ring = cursorRingRef.current;
+			const magneticTargets = gsap.utils.toArray<HTMLElement>(
+				"[data-cursor-target]",
+				rootRef.current,
+			);
+			const pointer = {
+				x: window.innerWidth * 0.5,
+				y: window.innerHeight * 0.5,
+			};
+			const pull = { x: 0, y: 0 };
+
+			document.body.classList.add("custom-cursor-active");
+
+			const ctx = gsap.context(() => {
+				const magneticCleanups: Array<() => void> = [];
+				let frameId = 0;
+				let activeMagneticTarget: HTMLElement | null = null;
+				const dotPosition = { x: pointer.x, y: pointer.y };
+				const ringPosition = { x: pointer.x, y: pointer.y };
+
+				gsap.set([dot, ring], {
+					opacity: 0,
+					force3D: true,
+				});
+
+				const renderCursor = () => {
+					const targetX = pointer.x + pull.x * 0.24;
+					const targetY = pointer.y + pull.y * 0.24;
+
+					dotPosition.x += (targetX - dotPosition.x) * 0.46;
+					dotPosition.y += (targetY - dotPosition.y) * 0.46;
+					ringPosition.x += (targetX - ringPosition.x) * 0.2;
+					ringPosition.y += (targetY - ringPosition.y) * 0.2;
+
+					dot.style.transform = `translate3d(${dotPosition.x}px, ${dotPosition.y}px, 0) translate(-50%, -50%) scale(var(--cursor-scale))`;
+					ring.style.transform = `translate3d(${ringPosition.x}px, ${ringPosition.y}px, 0) translate(-50%, -50%) scale(var(--cursor-scale))`;
+
+					frameId = window.requestAnimationFrame(renderCursor);
+				};
+
+				const setCursorVariant = (variant: string | null) => {
+					const ringScale = variant === "headline" ? 1.62 : 1.14;
+					const dotScale = variant === "headline" ? 0.88 : 1;
+					const ringOpacity = variant === "headline" ? 0.96 : 0.82;
+
+					gsap.to(ring, {
+						"--cursor-scale": ringScale,
+						opacity: ringOpacity,
+						duration: 0.28,
+						ease: "power3.out",
+						overwrite: true,
+					});
+					gsap.to(dot, {
+						"--cursor-scale": dotScale,
+						duration: 0.24,
+						ease: "power3.out",
+						overwrite: true,
+					});
+				};
+
+				const resetTargetTransform = (target: HTMLElement | null) => {
+					if (!target) return;
+
+					gsap.to(target, {
+						x: 0,
+						y: 0,
+						duration: 0.36,
+						ease: "power3.out",
+						overwrite: true,
+					});
+				};
+
+				const syncHoveredTarget = () => {
+					const nextTarget = document
+						.elementFromPoint(pointer.x, pointer.y)
+						?.closest?.("[data-cursor-target]") as HTMLElement | null;
+
+					if (nextTarget === activeMagneticTarget) {
+						return;
+					}
+
+					resetTargetTransform(activeMagneticTarget);
+					activeMagneticTarget = nextTarget;
+					setCursorVariant(
+						nextTarget ? nextTarget.dataset.cursorVariant ?? "default" : null,
+					);
+
+					if (!nextTarget) {
+						gsap.to(pull, {
+							x: 0,
+							y: 0,
+							duration: 0.28,
+							ease: "power3.out",
+							overwrite: true,
+						});
+					}
+				};
+
+				const showCursor = () => {
+					gsap.to([dot, ring], {
+						opacity: 1,
+						duration: 0.18,
+						ease: "power2.out",
+						overwrite: true,
+					});
+				};
+
+				const hideCursor = () => {
+					gsap.to([dot, ring], {
+						opacity: 0,
+						duration: 0.2,
+						ease: "power2.out",
+						overwrite: true,
+					});
+				};
+
+				const handlePointerMove = (
+					event: PointerEvent | MouseEvent,
+				) => {
+					pointer.x = event.clientX;
+					pointer.y = event.clientY;
+					syncHoveredTarget();
+					showCursor();
+				};
+
+				const handlePointerLeave = () => {
+					resetTargetTransform(activeMagneticTarget);
+					activeMagneticTarget = null;
+					gsap.to(pull, {
+						x: 0,
+						y: 0,
+						duration: 0.28,
+						ease: "power3.out",
+						overwrite: true,
+					});
+					setCursorVariant(null);
+					hideCursor();
+				};
+
+				const handleViewportShift = () => {
+					syncHoveredTarget();
+				};
+
+				window.addEventListener("pointermove", handlePointerMove, {
+					passive: true,
+				});
+				window.addEventListener("mousemove", handlePointerMove, {
+					passive: true,
+				});
+				window.addEventListener("pointerleave", handlePointerLeave);
+				window.addEventListener("mouseleave", handlePointerLeave);
+				window.addEventListener("blur", handlePointerLeave);
+				window.addEventListener("scroll", handleViewportShift, {
+					passive: true,
+				});
+				window.addEventListener("wheel", handleViewportShift, {
+					passive: true,
+				});
+
+				magneticTargets.forEach((target) => {
+					const variant = target.dataset.cursorVariant ?? "default";
+					const strength = Number(target.dataset.magneticStrength ?? "0.08");
+					const maxShift = variant === "headline" ? 30 : 14;
+
+					const handleEnter = () => {
+						activeMagneticTarget = target;
+						setCursorVariant(variant);
+					};
+
+					const handleMove = (event: PointerEvent) => {
+						if (activeMagneticTarget !== target) {
+							activeMagneticTarget = target;
+							setCursorVariant(variant);
+						}
+
+						const rect = target.getBoundingClientRect();
+						const relX = (event.clientX - rect.left) / rect.width - 0.5;
+						const relY = (event.clientY - rect.top) / rect.height - 0.5;
+						const offsetX = gsap.utils.clamp(
+							-maxShift,
+							maxShift,
+							relX * rect.width * strength,
+						);
+						const offsetY = gsap.utils.clamp(
+							-maxShift,
+							maxShift,
+							relY * rect.height * strength,
+						);
+						const cursorPull = variant === "headline" ? 1.45 : 0.9;
+
+						gsap.to(target, {
+							x: offsetX,
+							y: offsetY,
+							duration: 0.3,
+							ease: "power3.out",
+							overwrite: true,
+						});
+						gsap.to(pull, {
+							x: offsetX * cursorPull,
+							y: offsetY * cursorPull,
+							duration: 0.22,
+							ease: "power3.out",
+							overwrite: true,
+						});
+					};
+
+					const handleLeave = () => {
+						if (activeMagneticTarget === target) {
+							activeMagneticTarget = null;
+						}
+						gsap.to(target, {
+							x: 0,
+							y: 0,
+							duration: 0.42,
+							ease: "power3.out",
+							overwrite: true,
+						});
+						gsap.to(pull, {
+							x: 0,
+							y: 0,
+							duration: 0.28,
+							ease: "power3.out",
+							overwrite: true,
+						});
+						setCursorVariant(null);
+					};
+
+					target.addEventListener("pointerenter", handleEnter);
+					target.addEventListener("pointermove", handleMove);
+					target.addEventListener("pointerleave", handleLeave);
+					magneticCleanups.push(() => {
+						target.removeEventListener("pointerenter", handleEnter);
+						target.removeEventListener("pointermove", handleMove);
+						target.removeEventListener("pointerleave", handleLeave);
+					});
+				});
+
+				frameId = window.requestAnimationFrame(renderCursor);
+
+				return () => {
+					window.cancelAnimationFrame(frameId);
+					window.removeEventListener("pointermove", handlePointerMove);
+					window.removeEventListener("mousemove", handlePointerMove);
+					window.removeEventListener("pointerleave", handlePointerLeave);
+					window.removeEventListener("mouseleave", handlePointerLeave);
+					window.removeEventListener("blur", handlePointerLeave);
+					window.removeEventListener("scroll", handleViewportShift);
+					window.removeEventListener("wheel", handleViewportShift);
+					magneticCleanups.forEach((dispose) => dispose());
+				};
+			}, rootRef);
+
+			cleanup = () => {
+				document.body.classList.remove("custom-cursor-active");
+				ctx.revert();
+			};
+		})();
+
+		return () => {
+			mounted = false;
+			cleanup?.();
+		};
+	}, []);
+
 	return (
 		<main ref={rootRef} className={styles.main}>
+			<div className={styles.cursorShell} aria-hidden="true">
+				<span ref={cursorRingRef} className={styles.cursorRing} />
+				<span ref={cursorDotRef} className={styles.cursorDot} />
+			</div>
+
 			<section ref={heroSectionRef} className={styles.heroSection}>
 				<div className={styles.heroTop}>
 					<p ref={eyebrowRef} className={styles.heroEyebrow}>
@@ -443,7 +748,13 @@ export function HomePage({ locale }: { locale: Locale }) {
 					</div>
 				</div>
 
-				<div ref={marqueeWrapRef} className={styles.marqueeWrap}>
+				<div
+					ref={marqueeWrapRef}
+					className={styles.marqueeWrap}
+					data-cursor-target
+					data-cursor-variant="headline"
+					data-magnetic-strength="0.11"
+				>
 					<div
 						className={styles.marquee}
 						aria-label={`${content.home.badge}${content.home.marquee}`}
@@ -510,6 +821,9 @@ export function HomePage({ locale }: { locale: Locale }) {
 							className={styles.resumeLink}
 							href={resumeFile}
 							download
+							data-cursor-target
+							data-cursor-variant="link"
+							data-magnetic-strength="0.1"
 						>
 							{content.home.resumeLinkLabel}
 						</a>
@@ -536,6 +850,9 @@ export function HomePage({ locale }: { locale: Locale }) {
 						<a
 							className={styles.footerMail}
 							href="mailto:thuang0209@outlook.com"
+							data-cursor-target
+							data-cursor-variant="link"
+							data-magnetic-strength="0.1"
 						>
 							{content.home.footerMailLabel}
 						</a>
@@ -550,6 +867,9 @@ export function HomePage({ locale }: { locale: Locale }) {
 								href="https://www.linkedin.com/in/tao-huang-usc/"
 								target="_blank"
 								rel="noreferrer"
+								data-cursor-target
+								data-cursor-variant="link"
+								data-magnetic-strength="0.1"
 							>
 								{content.home.footerSocialLabel.split("LINKEDIN")[0]}LINKEDIN
 							</a>
@@ -562,6 +882,9 @@ export function HomePage({ locale }: { locale: Locale }) {
 											styles.footerHoverTrigger,
 										].join(" ")}
 										tabIndex={0}
+										data-cursor-target
+										data-cursor-variant="link"
+										data-magnetic-strength="0.1"
 									>
 										WECHAT
 										<span className={styles.footerHoverPreview}>

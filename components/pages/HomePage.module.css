@@ -4,6 +4,45 @@
 	overflow-x: clip;
 }
 
+.cursorShell {
+	pointer-events: none;
+	position: fixed;
+	inset: 0;
+	z-index: 120;
+	mix-blend-mode: difference;
+}
+
+.cursorDot,
+.cursorRing {
+	--cursor-scale: 1;
+	position: fixed;
+	left: 0;
+	top: 0;
+	border-radius: 999px;
+	opacity: 0;
+	user-select: none;
+	transform: translate3d(0, 0, 0) translate(-50%, -50%)
+		scale(var(--cursor-scale));
+	will-change: transform, opacity;
+}
+
+.cursorDot {
+	width: 0.42rem;
+	height: 0.42rem;
+	background: #fff;
+	box-shadow:
+		0 0 0.42rem rgba(255, 255, 255, 0.62),
+		0 0 1.04rem rgba(255, 255, 255, 0.34),
+		0 0 1.68rem rgba(255, 255, 255, 0.18);
+}
+
+.cursorRing {
+	width: 2.08rem;
+	height: 2.08rem;
+	border: 1px solid rgba(255, 255, 255, 0.92);
+	background: transparent;
+}
+
 .heroSection {
 	display: flex;
 	min-height: 100svh;
@@ -601,6 +640,12 @@
 	.footerHoverTrigger:focus-visible .footerHoverPreview,
 	.footerHoverTrigger:focus-within .footerHoverPreview {
 		transform: translate3d(24%, 0, 0) scale(1);
+	}
+}
+
+@media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+	.cursorShell {
+		display: none;
 	}
 }
 
